@@ -5,71 +5,263 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Tuition Manager </title>
 <style>
-:root{
+:root {
   --bg:#f6f7fb; --card:#ffffff; --text:#0f172a; --muted:#6b7280;
   --primary:#2563eb; --danger:#dc2626; --ok:#16a34a; --warn:#b45309;
   --shadow: 0 12px 28px rgba(16,24,40,.07); --radius:14px;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
-header{background:var(--primary);color:#fff;padding:14px 18px;position:sticky;top:0;z-index:60}
-header h1{margin:0;font-size:18px}
-.container{max-width:1100px;margin:16px auto;padding:0 14px}
-.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:14px}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.field{min-width:160px;flex:1}
-label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
-input,select,button{font:inherit;border:1px solid #e6e9ee;border-radius:10px;padding:9px 12px;background:#fff;outline:none}
-input:focus,select:focus{box-shadow:0 0 0 4px rgba(37,99,235,.12);border-color:var(--primary)}
-.btn{border:0;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}
-.btn.primary{background:var(--primary);color:#fff}
-.btn.primary:hover{filter:brightness(.95)}
-.btn.light{background:#eef2ff;color:#334155}
-.btn.danger{background:var(--danger);color:#fff}
-.btn.ok{background:var(--ok);color:#fff}
-.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
-.pill.paid{background:#dcfce7;color:#166534}
-.pill.unpaid{background:#fee2e2;color:#991b1b}
-.muted{color:var(--muted);font-size:13px}
-.grid{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
-@media (max-width:960px){ .grid{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:640px){ .grid{grid-template-columns:1fr} }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+}
+
+header {
+  background: var(--primary);
+  color: #fff;
+  padding: 14px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+header h1 { margin: 0; font-size: 18px; }
+
+.container {
+  max-width: 1100px;
+  margin: 16px auto;
+  padding: 0 14px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.field { min-width: 160px; flex: 1; }
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+input, select, button {
+  font: inherit;
+  border: 1px solid #e6e9ee;
+  border-radius: 10px;
+  padding: 9px 12px;
+  background: #fff;
+  outline: none;
+}
+
+input:focus, select:focus {
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+  border-color: var(--primary);
+}
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn.primary { background: var(--primary); color: #fff; }
+.btn.primary:hover { filter: brightness(.95); }
+.btn.light { background: #eef2ff; color: #334155; }
+.btn.danger { background: var(--danger); color: #fff; }
+.btn.ok { background: var(--ok); color: #fff; }
+
+.pill {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.pill.paid { background: #dcfce7; color: #166534; }
+.pill.unpaid { background: #fee2e2; color: #991b1b; }
+
+.muted { color: var(--muted); font-size: 13px; }
+
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
 
 /* student card */
-.student-card{border:1px solid #eef0f3;border-radius:12px;padding:12px}
-.student-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;flex-wrap:wrap}
-.name{font-weight:800}
-.meta{font-size:13px;color:var(--muted)}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.student-card {
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  padding: 12px;
+}
+.student-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.name { font-weight: 800; }
+.meta { font-size: 13px; color: var(--muted); }
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
 
 /* history table */
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:700px}
-th,td{padding:10px;border-bottom:1px solid #eef0f3;text-align:left}
-thead th{font-size:12px;text-transform:uppercase;color:#6b7280}
-@media (max-width:720px){
-  table.responsive thead{display:none}
-  table.responsive,table.responsive tbody, table.responsive tr, table.responsive td{display:block;width:100%}
-  table.responsive tr{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:8px 12px;margin:10px 0}
-  table.responsive td{border:0;padding:8px 0;display:grid;grid-template-columns:130px 1fr;gap:10px}
-  table.responsive td::before{content:attr(data-label);color:var(--muted);font-weight:700}
+.table-wrap { overflow: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #eef0f3;
+  text-align: left;
+}
+thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #6b7280;
 }
 
 /* overdue banner */
-.overdue-banner{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;background:#fff1f2;border-left:6px solid var(--danger);color:#7f1d1d}
-.overdue-list{display:flex;gap:8px;flex-wrap:wrap}
-.overdue-btn{background:transparent;border:0;color:var(--danger);cursor:pointer;font-weight:700;text-decoration:underline;padding:6px;border-radius:8px}
-.overdue-none{color:#065f46;background:#ecfdf5;padding:8px;border-radius:8px;border-left:4px solid #10b981}
+.overdue-banner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff1f2;
+  border-left: 6px solid var(--danger);
+  color: #7f1d1d;
+}
+.overdue-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.overdue-btn {
+  background: transparent;
+  border: 0;
+  color: var(--danger);
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  padding: 6px;
+  border-radius: 8px;
+}
+.overdue-none {
+  color: #065f46;
+  background: #ecfdf5;
+  padding: 8px;
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+}
 
 /* highlight effect when clicked from banner */
-.highlight{
-  box-shadow:0 0 0 4px rgba(99,102,241,.12), 0 6px 22px rgba(16,24,40,.12) !important;
+.highlight {
+  box-shadow: 0 0 0 4px rgba(99,102,241,.12), 0 6px 22px rgba(16,24,40,.12) !important;
   transform: translateY(-3px);
-  transition:transform .18s ease, box-shadow .18s ease;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
 
 /* small helpers */
-.small{font-size:13px}
+.small { font-size: 13px; }
+
+/* MOBILE STYLES FOR RESPONSIVE TABLE */
+@media (max-width: 720px) {
+  .table-wrap {
+    overflow-x: auto;
+    width: 100%;
+  }
+  table.responsive {
+    min-width: 0;
+    width: 100%;
+    display: block;
+  }
+  table.responsive thead { display: none; }
+  table.responsive,
+  table.responsive tbody,
+  table.responsive tr,
+  table.responsive td {
+    display: block;
+    width: 100%;
+  }
+  table.responsive tr {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 8px 12px;
+    margin: 10px 0;
+  }
+  table.responsive td {
+    border: 0;
+    padding: 8px 0;
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    word-break: break-word;
+  }
+  table.responsive td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-weight: 700;
+    pointer-events: none;
+  }
+
+  /* Status pill on mobile */
+  table.responsive td[data-label="Status"] {
+    grid-template-columns: 1fr !important;
+    align-items: center;
+  }
+  table.responsive td[data-label="Status"] .pill {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: fit-content;
+  }
+
+  /* Action button full-width on mobile */
+  table.responsive td[data-label="Action"] {
+    display: block !important;
+    width: 100% !important;
+  }
+  table.responsive td[data-label="Action"] button {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 14px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+  }
+}
+
+
 </style>
 </head>
 <body>
@@ -406,8 +598,11 @@ function renderHistory(st){
     `;
     tbody.appendChild(tr);
   }
-  // action handler
-  $("histTable").onclick = async (e)=>{
+}
+
+// Attach the event handler only once, after DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+  $("histTable").addEventListener("click", async function(e){
     const btn = e.target.closest("button");
     if(!btn) return;
     const action = btn.getAttribute("data-action");
@@ -417,8 +612,8 @@ function renderHistory(st){
       const stud = cache.find(x=>x.id===id);
       if(stud) await togglePaid(stud, ymStr);
     }
-  };
-}
+  });
+});
 
 /* ========= start ========= */
 </script>
